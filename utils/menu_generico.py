@@ -8,10 +8,10 @@ def exibir_menu(titulo, opcoes, texto_sair="Voltar"):
         raise ValueError("O dicionário de opções do menu não pode ser vazio.")
 
     opcao_max = max(opcoes.keys())
-
+    if LIMPAR_MENUS:
+                limpar_tela()
     while True:
-        if LIMPAR_MENUS:
-            limpar_tela()
+        
 
         print("=" * 40)
         print(titulo)
@@ -41,8 +41,6 @@ def exibir_menu(titulo, opcoes, texto_sair="Voltar"):
             print("Opção não implementada.")
             continue
 
-        if LIMPAR_MENUS:
-            limpar_tela()
 
         funcao()
 

@@ -1,5 +1,5 @@
 from conexao import conectar, desconectar
-from sqlalchemy import text, func
+from sqlalchemy import text, func, extract
 from sqlalchemy.exc import NoResultFound
 from db.funcionarios_tp2_comandos_sql import *
 from models.models_tp2 import Funcionarios_models
@@ -89,6 +89,7 @@ def exercicio1_db(retorno_tipo):
     """
     Original:   Selecione todos os funcionários que trabalham no departamento de TI.
     Modificado: Selecione todos os funcionários que trabalham no departamento Técnico.
+    Versão SQL: SELECT * FROM projeto_de_bloco_tp2.funcionarios WHERE departamento = 'Técnico'
     """
     def consulta(session):
         return (
@@ -108,6 +109,7 @@ def exercicio2_db(retorno_tipo):
     """
     Original:   Selecione os nomes dos funcionários que possuem um salário maior que 5.000,00
     Modificado: Original
+    Versão SQL: SELECT nome, salario FROM projeto_de_bloco_tp2.funcionarios WHERE salario > 5000
     """
     def consulta(session):
         return (
@@ -131,6 +133,7 @@ def exercicio3_db(retorno_tipo):
     """
     Original:   Selecione o nome e a data de contratação dos funcionários que foram contratados após 01/01/2022.
     Modificado: Original
+    Versão SQL: SELECT nome, data_contratacao FROM projeto_de_bloco_tp2.funcionarios WHERE data_contratacao > '2022-01-01';
     """
     def consulta(session):
         return (
@@ -155,6 +158,7 @@ def exercicio4_db(retorno_tipo):
     """
     Original:   Selecione o departamento e o salário médio de cada departamento. 
     Modificado: Original
+    Versão SQL: SELECT departamento, ROUND(AVG(salario), 2) AS salario_medio FROM projeto_de_bloco_tp2.funcionarios GROUP BY departamento;
     """
     def consulta(session):
         return (
@@ -177,6 +181,7 @@ def exercicio5_db(retorno_tipo):
     """
     Original:   Selecione o nome e o cargo dos funcionários que possuem "da Silva" no nome.
     Modificado: Original
+    Versão SQL: SELECT nome, cargo FROM projeto_de_bloco_tp2.funcionarios WHERE nome ILIKE '%da Silva%';
     """
     def consulta(session):
         return (
@@ -200,6 +205,7 @@ def exercicio6_db(retorno_tipo):
     """
     Original:   Selecione todos os funcionários que têm cargos de confiança.
     Modificado: Original
+    Versão SQL: SELECT nome, cargo_de_confianca FROM projeto_de_bloco_tp2.funcionarios WHERE cargo_de_confianca = TRUE;
     """
     def consulta(session):
         return (
@@ -223,6 +229,7 @@ def exercicio7_db(retorno_tipo):
     """
     Original:   Selecione o nome e o departamento dos analistas.
     Modificado: Selecione o nome e o departamento dos Montador Júnior.
+    Versão SQL: SELECT nome, cargo FROM projeto_de_bloco_tp2.funcionarios WHERE cargo = 'Montador Júnior';
     """
     def consulta(session):
         return (
@@ -245,6 +252,7 @@ def exercicio8_db(retorno_tipo):
     """
     Original:   Selecione o nome dos funcionários e seus salários ordenados de forma decrescente pelo salário.
     Modificado: Original
+    Versão SQL: SELECT nome, salario FROM projeto_de_bloco_tp2.funcionarios ORDER BY salario desc;
     """
     def consulta(session):
         return (
@@ -269,23 +277,22 @@ def exercicio9_db(retorno_tipo):
     """
     Original:   Selecione o nome e o ID dos funcionários que foram contratados no ano de 2023.
     Modificado: Original
+    Versão SQL: SELECT nome, data_contratacao FROM projeto_de_bloco_tp2.funcionarios WHERE EXTRACT(YEAR FROM data_contratacao) = 2023;
     """
     def consulta(session):
-        # N achei via sqlalchemy como pegar só o ano, então fiz via sql para n perde tempo
-        
         return (
-            session.execute(
-            text("""
-                SELECT nome, id_funcionario FROM projeto_de_bloco_tp2.funcionarios
-                WHERE EXTRACT(YEAR FROM data_contratacao) = 2023;
-            """)
-        ).fetchall()
+            session.query(
+              Funcionarios_models.id_funcionario,
+              Funcionarios_models.nome,
+              Funcionarios_models.data_contratacao
+           )
+            .filter(extract('year', Funcionarios_models.data_contratacao) == 2023)
         )
 
     return rodar_exercicio(
         consulta_fn=consulta,
         retorno_tipo=retorno_tipo,
-        colunas=["nome", "id_funcionario"],
+        colunas=["id_funcionario", "nome", "data_contratacao"],
         msg_sem_resultado="Nenhum funcionário foi encontrado."
     )
 
@@ -295,10 +302,9 @@ def exercicio10_db(retorno_tipo):
     """
     Original:   Selecione o nome dos funcionários que trabalham no departamento Jurídico e possuem um salário menor ou igual a 3.000,00.
     Modificado: Selecione o nome dos funcionários que trabalham no departamento Administração e possuem um salário menor ou igual a 3.000,00.
+    Versão SQL: SELECT nome, departamento, salario FROM projeto_de_bloco_tp2.funcionarios WHERE departamento = 'Administração' AND salario > 3000;
     """
     def consulta(session):
-        # N achei via sqlalchemy como pegar só o ano, então fiz via sql para n perde tempo
-        
         return (
             session.query(Funcionarios_models.nome)
             .filter(
@@ -311,7 +317,7 @@ def exercicio10_db(retorno_tipo):
     return rodar_exercicio(
         consulta_fn=consulta,
         retorno_tipo=retorno_tipo,
-        colunas=["nome"],
+        colunas=["nome", "departamento", "salario"],
         msg_sem_resultado="Nenhum funcionário foi encontrado."
     )
 
@@ -320,10 +326,9 @@ def exercicio11_db(retorno_tipo):
     """
     Original:   Selecione o nome dos funcionários que são Gerentes ou Diretores.
     Modificado: Selecione o nome dos funcionários que são Coordenador Administrativo ou Diretor.
+    Versão SQL: SELECT nome, departamento, salario FROM projeto_de_bloco_tp2.funcionarios WHERE cargo in ('Coordenador Administrativo', 'Diretor');
     """
     def consulta(session):
-        # N achei via sqlalchemy como pegar só o ano, então fiz via sql para n perde tempo
-        
         return (
             session.query(Funcionarios_models.nome)
             .filter(Funcionarios_models.cargo.in_(["Coordenador Administrativo", "Diretor"]),)
@@ -333,7 +338,7 @@ def exercicio11_db(retorno_tipo):
     return rodar_exercicio(
         consulta_fn=consulta,
         retorno_tipo=retorno_tipo,
-        colunas=["nome"],
+        colunas=["nome", "cargo"],
         msg_sem_resultado="Nenhum funcionário foi encontrado."
     )
 
@@ -341,6 +346,7 @@ def exercicio12_db(retorno_tipo):
     """
     Original:   Selecione o nome dos funcionários e os anos de experiência (considerando que estamos em 2025).
     Modificado: Original
+    Versão SQL: SELECT nome, 2025 - EXTRACT(YEAR FROM data_contratacao) AS tempo_experiencia FROM projeto_de_bloco_tp2.funcionarios;
     """
     def consulta(session):
         return (
@@ -362,6 +368,7 @@ def exercicio13_db(retorno_tipo):
     """
     Original:   Selecione o nome e o departamento dos funcionários, ordenados pelo nome em ordem alfabética.
     Modificado: Original
+    Versão SQL: SELECT nome, departamento, salario FROM projeto_de_bloco_tp2.funcionarios ORDER BY salario asc;
     """
     def consulta(session):
         return (
@@ -376,7 +383,7 @@ def exercicio13_db(retorno_tipo):
     return rodar_exercicio(
         consulta_fn=consulta,
         retorno_tipo=retorno_tipo,
-        colunas=["nome", "departamento"],
+        colunas=["nome", "departamento", "salario"],
         msg_sem_resultado="Nenhum funcionário encontrado."
     )
 
@@ -385,6 +392,7 @@ def exercicio14_db(retorno_tipo):
     """
     Original:   Selecione o nome e o cargo dos funcionários cujo nome começa com 'João'.
     Modificado: Original
+    Versão SQL: SELECT nome, cargo FROM projeto_de_bloco_tp2.funcionarios WHERE nome ILIKE 'João%';
     """
     def consulta(session):
         return (
@@ -409,6 +417,7 @@ def exercicio15_db(retorno_tipo):
     """
     Original:   Selecione a quantidade de funcionários em cada departamento.
     Modificado: Original
+    Versão SQL: SELECT departamento, count(departamento) AS funcionarios_departamento FROM projeto_de_bloco_tp2.funcionarios GROUP BY departamento;
     """
     def consulta(session):
         return (
@@ -424,5 +433,5 @@ def exercicio15_db(retorno_tipo):
         consulta_fn=consulta,
         retorno_tipo=retorno_tipo,
         colunas=["departamento", "quantidade"],
-        msg_sem_resultado="Nenhum departamento encontrado."
+        msg_sem_resultado="Nenhum funcionário encontrado."
     )

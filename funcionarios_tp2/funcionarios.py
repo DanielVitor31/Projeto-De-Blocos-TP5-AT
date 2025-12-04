@@ -65,17 +65,17 @@ def exercicio8_exibir():
 
 def exercicio9_exibir():
     dados = exercicio9_db("lista")
-    _exibir_tabela(dados, ["Nome", "ID"], "Exercício 9")
+    _exibir_tabela(dados, ["ID", "Nome", "Data de contratação"], "Exercício 9")
 
 
 def exercicio10_exibir():
     dados = exercicio10_db("lista")
-    _exibir_tabela(dados, ["Nome"], "Exercício 10")
+    _exibir_tabela(dados, ["Nome", "departamento", "salario"], "Exercício 10")
 
 
 def exercicio11_exibir():
     dados = exercicio11_db("lista")
-    _exibir_tabela(dados, ["Nome"], "Exercício 11")
+    _exibir_tabela(dados, ["Nome", "cargo"], "Exercício 11")
     
 def exercicio12_exibir():
     dados = exercicio12_db("lista")
@@ -84,7 +84,7 @@ def exercicio12_exibir():
 
 def exercicio13_exibir():
     dados = exercicio13_db("lista")
-    _exibir_tabela(dados, ["Nome", "Departamento"], "Exercício 13")
+    _exibir_tabela(dados, ["Nome", "Departamento", "salario"], "Exercício 13")
 
 
 def exercicio14_exibir():
