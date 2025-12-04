@@ -18,8 +18,9 @@ def _exibir_tabela(dados, colunas, titulo: str):
     print(df.to_string(index=False))
     
     
-def funcionarios_exibir():
-    dados = funcionarios_exibir_db("lista")
+def funcionarios_exibir(limitado):
+    print(limitado)
+    dados = funcionarios_exibir_db("lista", limitado)
     _exibir_tabela(dados, FUNCIONARIOS_CABECALHO, "Funcionários")
 
 

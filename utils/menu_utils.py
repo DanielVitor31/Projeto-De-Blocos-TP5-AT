@@ -1,12 +1,27 @@
+import os
+import platform
+
+def limpar_tela():
+    sistema = platform.system()
+
+    if sistema == "Windows":
+        os.system("cls")
+    else:
+        os.system("clear")
+
+
+
 def menu_validar_entrada(opcao_escolhida, opcao_limite):
-    """Valida a entrada do usuário para o menu principal."""
+    """
+    Valida a entrada do usuário para um menu qualquer.
+    """
 
-    if (opcao_escolhida.isdigit()):
-        opcao_escolhida = int(opcao_escolhida)
-    else:
+    try:
+        valor = int(opcao_escolhida)
+    except ValueError:
         return None
 
-    if (opcao_escolhida >= 0 and opcao_escolhida <= opcao_limite):
-        return opcao_escolhida
-    else:
-        return None
+    if 0 <= valor <= opcao_limite:
+        return valor
+
+    return None

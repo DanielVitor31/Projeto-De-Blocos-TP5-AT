@@ -1,5 +1,4 @@
 MENU_OPCOES_NUM_TP3 = 6
-DADOS_REDUZIDO = True
 
 CLIENTES_CABECALHO = [
     "id_cliente",

@@ -30,11 +30,14 @@ def funcionarios_criar_resetar():
     return
 
 
-def funcionarios_exibir_db(retorno_tipo):
+def funcionarios_exibir_db(retorno_tipo, limitado):
     try:
         session = conectar()
         print("Fazendo buscas no banco de dados aguarde....")
-        funcionarios = session.query(Funcionarios_models).all()
+        funcionarios = session.query(Funcionarios_models)
+        
+        if (limitado):
+            funcionarios = funcionarios.limit(5)
         
         if not funcionarios:
           raise NoResultFound()
@@ -49,7 +52,7 @@ def funcionarios_exibir_db(retorno_tipo):
     finally:
         desconectar(session)
 
-        return Funcionarios_models.dados_return(funcionarios, retorno_tipo)
+        return Funcionarios_models.dados_return(funcionarios.all(), retorno_tipo)
     
     
     
