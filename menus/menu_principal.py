@@ -3,6 +3,7 @@ from .menu_tp1 import menu_exibir_tp1
 from .menu_tp2 import menu_exibir_tp2
 from .menu_tp3 import menu_exibir_tp3
 from .menu_tp4 import menu_exibir_tp4
+from .menu_tp5 import menu_exibir_tp5
 
 
 def menu_exibir():
@@ -13,6 +14,7 @@ def menu_exibir():
         2: ("TP2 (Funcionários)", menu_exibir_tp2),
         3: ("TP3 ( Negocio Completo)", menu_exibir_tp3),
         4: ("TP4 ( Inserir/Atualizar e Deletar Clientes JSON)", menu_exibir_tp4),
+        5: ("TP5 ( Web Scraping)", menu_exibir_tp5),
     }
 
     exibir_menu("MENU PRINCIPAL", opcoes, texto_sair="Sair do programa")
