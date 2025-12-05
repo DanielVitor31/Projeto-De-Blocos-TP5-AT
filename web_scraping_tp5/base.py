@@ -38,7 +38,7 @@ def exibir_titulo(bs):
 
 
 def obter_tabela(bs):
-    # pega todas as tabelas que contenham "wikitable" em qualquer combinação de classes
+    # pega todas as tabelas que tenham "wikitable" em qualquer combinação de classes
     tabelas = bs.find_all("table", class_=lambda c: c and "wikitable" in c)
 
     if not tabelas:
@@ -47,11 +47,15 @@ def obter_tabela(bs):
 
     tabela_certa = None
 
-    # identifica a tabela pelo cabeçalho (blindado contra mudanças)
     for tabela in tabelas:
         headers = [th.get_text(strip=True).lower() for th in tabela.find_all("th")]
 
-        if ("unidade federativa" in headers) and ("abrev." in headers) and ("capital" in headers):
+
+        if (
+            "unidade federativa" in headers
+            and ("abreviação" in headers or "abrev." in headers)
+            and ("sede de governo" in headers or "capital" in headers)
+        ):
             tabela_certa = tabela
             break
 
@@ -62,26 +66,28 @@ def obter_tabela(bs):
     linhas = tabela_certa.find_all("tr")
     estados = []
 
-    for linha in linhas[1:]:  # pula header
-        colunas = linha.find_all(["th", "td"])
-        if len(colunas) < 3:
+    for linha in linhas[1:]:  # pula o cabeçalho
+        colunas = linha.find_all("td")
+        if len(colunas) < 4:
             continue
 
-        nome = colunas[0].get_text(strip=True)
-        sigla = colunas[1].get_text(strip=True)
-        capital = colunas[2].get_text(strip=True)
+        nome = colunas[1].get_text(strip=True)
+        sigla = colunas[2].get_text(strip=True)
+        capital = colunas[3].get_text(strip=True)
 
-        # remove [1], [2] etc...
         nome = re.sub(r"\[\d+\]", "", nome)
         capital = re.sub(r"\[\d+\]", "", capital)
 
-        estados.append({
-            "nome": nome,
-            "sigla": sigla,
-            "capital": capital
-        })
+        estados.append(
+            {
+                "nome": nome,
+                "sigla": sigla,
+                "capital": capital,
+            }
+        )
 
     return estados
+
 
 
 

@@ -1,13 +1,11 @@
-Sempre execute o "main.py" para evitar erro de diretorio.
+Obs: Do TP2 até o TP5, usei "SQLAlchemy" e banco de dados da Aiven com PostgreSQL. Como o senhor deu muita liberdade, preferi seguir esse caminho.
 
-Acredito que em boa parte do código deixei docstring explicando as funções e tudo mais dei meu melhor
+TP1: Como era pra fazer via lista, eu deixei uma lista na pasta "db" e acredito que fiz tudo que foi pedido no TP1.
 
-No tp1: Era para fazer lista então fiz uma lista de lista e com dados locais
-No tp2 Como o senhor deu muita liberdade vou usar SQLAlchema e o banco online na aiven, porém para isso precisa baixar "pip install psycopg2-binary" e "pip install sqlalchemy".
-tp2: invés de fazer via pandas convertendo o execel eu peguei os dados do execel do senhor e modifiquei para meu trabalho e usei um banco online cm sqlalchemy
+TP2: Fiz as pesquisas via "SQLAlchemy", mas também deixei a versão em SQL puro, além da questão original e a modificada, pra facilitar a compreensão.
 
+TP3: Era mais simples (join), mas também fiz com "SQLAlchemy". Mesmo assim, deixei a versão em SQL puro.
 
+TP4: Fiz apenas um arquivo JSON — achei mais prático e melhor. Pra deletar, ele remove tudo; caso não exista algum item, nada acontece. E no caso do upsert, ele já faz praticamente todo o trabalho.
 
-
-
-Pontos para estudar: pq fiz uma função para dicionario e lista invés de usar mappmappings
+TP5: Fiz o meu melhor, mas ficou confuso o web scraping e mesclar isso no SQL, porque fugiu muito da ideia inicial do meu projeto.
