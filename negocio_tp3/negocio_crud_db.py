@@ -34,10 +34,14 @@ def _rodar_exercicio(consulta_fn):
     
 def inner_join():
     """"
+    Exibir todos os funcionarios e suas montagens
+    OBS: Eu poderia agrupar pelo id do funcionario, mas fiz assim para n perder a lógica de N:N
+    
     Versão SQL puro:
     SELECT
     f.id_funcionario,
     f.nome,
+    f.cargo,
     mf.xid_montagem
     FROM projeto_de_bloco_tp3.montagem_funcionario mf
     INNER JOIN projeto_de_bloco_tp3.funcionarios f ON f.id_funcionario = mf.xid_funcionario;
@@ -47,6 +51,7 @@ def inner_join():
         select(
             Funcionarios_models.id_funcionario,
             Funcionarios_models.nome,
+            Funcionarios_models.cargo,
             MontagemFuncionario_models.xid_montagem,
         )
         .join(
@@ -64,6 +69,7 @@ def inner_join():
     
 def left_join():
     """"
+    Exibir todas montagens independente dos funcionarios
     Versão SQL puro:
     SELECT
     m.id_montagem,
@@ -109,7 +115,8 @@ def left_join():
     
 def right_join():
     """"
-    SQLAlchemy não possui RIGHT JOIN direto, mas pode ser feito com LEFT JOIN invertido
+    Exibir todos os funcionarios independente das montagens.
+    OBS: SQLAlchemy não possui RIGHT JOIN direto, mas pode ser feito com LEFT JOIN invertido
     Versão SQL puro:
     
     SELECT f.id_funcionario, f.nome, mf.xid_montagem 
