@@ -19,7 +19,6 @@ class Clientes_models(Base):
 
     # config da base genérica
     COLUNAS_PADRAO = CLIENTES_CABECALHO
-    CAMPO_ID = "id_cliente"
 
     id_cliente = Column(
         UUID(as_uuid=False),
@@ -53,7 +52,6 @@ class Funcionarios_models(Base):
     __table_args__ = {"schema": "projeto_de_bloco_tp3"}
 
     COLUNAS_PADRAO = FUNCIONARIOS_CABECALHO
-    CAMPO_ID = "id_funcionario"
 
     id_funcionario = Column(
         UUID(as_uuid=False),
@@ -89,7 +87,6 @@ class Montagem_models(Base):
     __table_args__ = {"schema": "projeto_de_bloco_tp3"}
 
     COLUNAS_PADRAO = MONTAGEM_CABECALHO
-    CAMPO_ID = "id_montagem"
 
     id_montagem = Column(
         UUID(as_uuid=False),
@@ -137,8 +134,6 @@ class MontagemFuncionario_models(Base):
     __tablename__ = "montagem_funcionario"
     __table_args__ = {"schema": "projeto_de_bloco_tp3"}
 
-    # aqui não definimos COLUNAS_PADRAO / CAMPO_ID
-    # porque normalmente você não vai usar para_lista/para_dict nela
 
     xid_montagem = Column(
         UUID(as_uuid=False),
