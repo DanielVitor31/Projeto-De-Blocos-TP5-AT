@@ -1,5 +1,5 @@
 from utils.menu_generico import exibir_menu
-from web_scraping.base import exibir
+from web_scraping_tp5.base import exibir
 
 
 def menu_exibir_tp5():

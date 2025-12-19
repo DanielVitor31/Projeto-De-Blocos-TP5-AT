@@ -55,7 +55,6 @@ def inner_join():
         )
         )
         
-        session = conectar()
         return (
             session.execute(stmt).mappings().all()
         )
@@ -102,7 +101,6 @@ def left_join():
             )
     )
         
-        session = conectar()
         return (
             session.execute(stmt).mappings().all()
         )
@@ -111,7 +109,9 @@ def left_join():
     
 def right_join():
     """"
+    SQLAlchemy não possui RIGHT JOIN direto, mas pode ser feito com LEFT JOIN invertido
     Versão SQL puro:
+    
     SELECT f.id_funcionario, f.nome, mf.xid_montagem 
     FROM projeto_de_bloco_tp3.montagem_funcionario mf 
     RIGHT JOIN projeto_de_bloco_tp3.funcionarios f ON f.id_funcionario = mf.xid_funcionario;
@@ -129,7 +129,6 @@ def right_join():
         )
         )
         
-        session = conectar()
         return (
             session.execute(stmt).mappings().all()
         )

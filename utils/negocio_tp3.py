@@ -23,7 +23,7 @@ def converter_dicionario(dados, limite):
     return
 
 
-def converter_lista(dados, tipo_retorno, limite):
+def converter_lista(dados, limite):
     limite_contador = 0
 
     for item in dados:
